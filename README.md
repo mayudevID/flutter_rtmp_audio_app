@@ -2,7 +2,7 @@
 
 A Flutter application for RTMP audio streaming using native implementations:
 - Android: rtmp-rtsp-stream-client-java (Kotlin)
-- iOS: HaishinKit
+- iOS: HaishinKit (Work In Progress)
 
 ## Features
 
@@ -40,7 +40,7 @@ The app uses Flutter's method channels and event channels to communicate between
 ## Getting Started
 
 1. Clone the repository
-2. Run `flutter pub get` to install dependencies
+2. Run `flutter pub get` to install dependencies (Flutter 3.27.4)
 3. For iOS, run `pod install` in the iOS directory
 4. Run the app with `flutter run`
 
