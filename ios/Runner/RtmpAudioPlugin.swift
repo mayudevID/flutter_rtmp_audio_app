@@ -10,7 +10,7 @@ enum StreamState: String {
     case failed = "failed"
 }
 
-class RtmpAudioPlugin: NSObject, FlutterPlugin {
+public class RtmpAudioPlugin: NSObject, FlutterPlugin {
     private var rtmpConnection: RTMPConnection?
     private var rtmpStream: RTMPStream?
     private var isStreaming = false
@@ -22,7 +22,7 @@ class RtmpAudioPlugin: NSObject, FlutterPlugin {
     private var bitrate: Int = 128000
     
     // Register the plugin with Flutter
-    static func register(with registrar: FlutterPluginRegistrar) {
+    public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "com.example.flutter_rtmp_audio_app/rtmp_audio", binaryMessenger: registrar.messenger())
         let instance = RtmpAudioPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
@@ -33,7 +33,7 @@ class RtmpAudioPlugin: NSObject, FlutterPlugin {
     }
     
     // Handle method calls from Flutter
-    func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+    public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         switch call.method {
         case "startStreaming":
             if let args = call.arguments as? [String: Any],
@@ -246,12 +246,12 @@ class RtmpAudioPlugin: NSObject, FlutterPlugin {
 
 // MARK: - FlutterStreamHandler
 extension RtmpAudioPlugin: FlutterStreamHandler {
-    func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
+    public func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
         eventSink = events
         return nil
     }
     
-    func onCancel(withArguments arguments: Any?) -> FlutterError? {
+    public func onCancel(withArguments arguments: Any?) -> FlutterError? {
         eventSink = nil
         return nil
     }

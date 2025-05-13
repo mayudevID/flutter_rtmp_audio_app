@@ -2,7 +2,7 @@
 
 A Flutter application for RTMP audio streaming using native implementations:
 - Android: rtmp-rtsp-stream-client-java (Kotlin)
-- iOS: HaishinKit (Work In Progress)
+- iOS: HaishinKit
 
 ## Features
 
