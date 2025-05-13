@@ -22,6 +22,7 @@ class RtmpAudioPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
     private var sampleRate: Double = 44100
     private var channelCount: Int = 1
     private var bitrate: Int = 128000
+    private var isMuted: Bool = false
     
     // Register the plugin with Flutter
     static func register(with registrar: FlutterPluginRegistrar) {
@@ -71,6 +72,12 @@ class RtmpAudioPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
             requestMicrophonePermission { [weak self] granted in
                 result(granted)
             }
+            
+        case "muteAudio":
+            result(muteAudio())
+            
+        case "unmuteAudio":
+            result(unmuteAudio())
             
         default:
             result(FlutterMethodNotImplemented)
@@ -229,6 +236,28 @@ class RtmpAudioPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
             updateState(.failed)
             return false
         }
+    }
+    
+    private func muteAudio() -> Bool {
+        if isStreaming {
+            isMuted = true
+            
+            // TODO
+            
+            return true
+        }
+        return false
+    }
+    
+    private func unmuteAudio() -> Bool {
+        if isStreaming {
+            isMuted = false
+            
+            // TODO
+            
+            return true
+        }
+        return false
     }
     
     private func checkMicrophonePermission(completion: @escaping (Bool) -> Void) {

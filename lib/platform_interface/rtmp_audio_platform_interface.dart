@@ -84,4 +84,26 @@ class RtmpAudioPlatformInterface {
       return false;
     }
   }
+
+  // Mute audio streaming
+  Future<bool> muteAudio() async {
+    try {
+      final bool result = await _channel.invokeMethod('muteAudio');
+      return result;
+    } on PlatformException catch (e) {
+      print('Error muting audio: ${e.message}');
+      return false;
+    }
+  }
+
+  // Unmute audio streaming
+  Future<bool> unmuteAudio() async {
+    try {
+      final bool result = await _channel.invokeMethod('unmuteAudio');
+      return result;
+    } on PlatformException catch (e) {
+      print('Error unmuting audio: ${e.message}');
+      return false;
+    }
+  }
 }

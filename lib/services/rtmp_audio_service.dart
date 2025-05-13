@@ -40,6 +40,16 @@ class RtmpAudioService {
     return _platformInterface.requestMicrophonePermission();
   }
 
+  // Mute audio during streaming
+  Future<bool> muteAudio() async {
+    return _platformInterface.muteAudio();
+  }
+
+  // Unmute audio during streaming
+  Future<bool> unmuteAudio() async {
+    return _platformInterface.unmuteAudio();
+  }
+
   // Dispose resources
   void dispose() {
     _stateSubscription?.cancel();

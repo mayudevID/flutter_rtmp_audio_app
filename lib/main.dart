@@ -40,6 +40,7 @@ class _StreamingPageState extends State<StreamingPage> {
   StreamState _currentState = StreamState.disconnected;
   String _errorMessage = '';
   bool _isStreaming = false;
+  bool _isMuted = false;
 
   @override
   void initState() {
@@ -102,6 +103,24 @@ class _StreamingPageState extends State<StreamingPage> {
       setState(() {
         _errorMessage = 'Failed to stop streaming';
       });
+    }
+  }
+
+  Future<void> _toggleMute() async {
+    if (_isMuted) {
+      final result = await _rtmpService.unmuteAudio();
+      if (mounted) {
+        setState(() {
+          _isMuted = !result;
+        });
+      }
+    } else {
+      final result = await _rtmpService.muteAudio();
+      if (mounted) {
+        setState(() {
+          _isMuted = result;
+        });
+      }
     }
   }
 
@@ -171,17 +190,42 @@ class _StreamingPageState extends State<StreamingPage> {
                   ),
                 ),
               const SizedBox(height: 40),
-              ElevatedButton(
-                onPressed: _isStreaming ? _stopStreaming : _startStreaming,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: _isStreaming ? Colors.red : Colors.green,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                ),
-                child: Text(
-                  _isStreaming ? 'Stop Streaming' : 'Start Streaming',
-                  style: const TextStyle(fontSize: 18),
-                ),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: ElevatedButton(
+                      onPressed:
+                          _isStreaming ? _stopStreaming : _startStreaming,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            _isStreaming ? Colors.red : Colors.green,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                      ),
+                      child: Text(
+                        _isStreaming ? 'Stop Streaming' : 'Start Streaming',
+                        style: const TextStyle(fontSize: 18),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    flex: 1,
+                    child: ElevatedButton(
+                      onPressed: _isStreaming ? _toggleMute : null,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: _isMuted ? Colors.orange : Colors.blue,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                      ),
+                      child: Icon(
+                        _isMuted ? Icons.mic_off : Icons.mic,
+                        size: 24,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

@@ -1,14 +1,14 @@
 PODS:
   - Flutter (1.0.0)
-  - HaishinKit (1.7.6):
-    - Logboard (~> 2.4.2)
-  - Logboard (2.4.2)
+  - HaishinKit (1.9.8):
+    - Logboard (~> 2.5.0)
+  - Logboard (2.5.0)
   - permission_handler_apple (9.1.1):
     - Flutter
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - HaishinKit (~> 1.7.0)
+  - HaishinKit (~> 1.9.0)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
 
 SPEC REPOS:
@@ -24,10 +24,10 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  HaishinKit: a00b18af8794c9d44da43ebe89854c0e8a488a9e
-  Logboard: 759d82599c439945d430d5a0958455b5a1974a0c
+  HaishinKit: caa231f3627d18ebe8011c46a50816e281f0ff4a
+  Logboard: 4674a3d86681539a0ad1fca528d888b90871e268
   permission_handler_apple: 3787117e48f80715ff04a3830ca039283d6a4f29
 
-PODFILE CHECKSUM: a7321c123a182ea36d21a3f9133dea8d3a55706d
+PODFILE CHECKSUM: f69d24e5440abe4bf4c8e3b9d24b82320e047020
 
 COCOAPODS: 1.16.2

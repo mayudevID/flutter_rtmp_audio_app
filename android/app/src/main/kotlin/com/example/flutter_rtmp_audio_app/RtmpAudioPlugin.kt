@@ -36,6 +36,7 @@ class RtmpAudioPlugin: FlutterPlugin, MethodChannel.MethodCallHandler, EventChan
     // RTMP client for streaming
     private var rtmpClient: RtmpClient? = null
     private var isStreaming = false
+    private var isMuted = false
 
     // Audio recording variables
     private var audioRecord: AudioRecord? = null
@@ -104,6 +105,12 @@ class RtmpAudioPlugin: FlutterPlugin, MethodChannel.MethodCallHandler, EventChan
                 requestMicrophonePermission()
                 result.success(true) // Just indicates we've requested the permission
             }
+            "muteAudio" -> {
+                result.success(muteAudio())
+            }
+            "unmuteAudio" -> {
+                result.success(unmuteAudio())
+            }
             else -> {
                 result.notImplemented()
             }
@@ -170,7 +177,14 @@ class RtmpAudioPlugin: FlutterPlugin, MethodChannel.MethodCallHandler, EventChan
                     try {
                         val read = audioRecord?.read(audioBuffer!!, 0, minBufferSize)
                         if (read != null && read > 0) {
-                            encodePcmToAac(audioBuffer!!, read)
+                            if (isMuted) {
+                                // If muted, send silent audio (all zeros)
+                                val silentBuffer = ByteArray(read)
+                                encodePcmToAac(silentBuffer, read)
+                            } else {
+                                // If not muted, send the actual audio data
+                                encodePcmToAac(audioBuffer!!, read)
+                            }
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -349,6 +363,25 @@ class RtmpAudioPlugin: FlutterPlugin, MethodChannel.MethodCallHandler, EventChan
     }
 
     override fun onAuthSuccessRtmp() {
-        // Authentication successful, waiting for connection
+        // Authentication successful
+    }
+
+    // Mute audio during streaming
+    private fun muteAudio(): Boolean {
+        if (isStreaming) {
+            isMuted = true
+            // For Android, we'll create silent audio data instead of actual microphone input
+            return true
+        }
+        return false
+    }
+
+    // Unmute audio during streaming
+    private fun unmuteAudio(): Boolean {
+        if (isStreaming) {
+            isMuted = false
+            return true
+        }
+        return false
     }
 }
