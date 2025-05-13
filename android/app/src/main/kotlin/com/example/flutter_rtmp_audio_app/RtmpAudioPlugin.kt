@@ -55,7 +55,7 @@ class RtmpAudioPlugin: FlutterPlugin, MethodChannel.MethodCallHandler, EventChan
     private val executor = Executors.newSingleThreadExecutor()
     private val mainHandler = Handler(Looper.getMainLooper())
 
-    override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
+    override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, "com.example.flutter_rtmp_audio_app/rtmp_audio")
         eventChannel = EventChannel(flutterPluginBinding.binaryMessenger, "com.example.flutter_rtmp_audio_app/rtmp_audio_events")
         
@@ -79,7 +79,7 @@ class RtmpAudioPlugin: FlutterPlugin, MethodChannel.MethodCallHandler, EventChan
         activity = null
     }
 
-    override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: MethodChannel.Result) {
+    override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
         when (call.method) {
             "startStreaming" -> {
                 val url = call.argument<String>("url")
@@ -328,7 +328,7 @@ class RtmpAudioPlugin: FlutterPlugin, MethodChannel.MethodCallHandler, EventChan
         }
     }
 
-    override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
+    override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
         eventChannel.setStreamHandler(null)
         stopStreaming()
